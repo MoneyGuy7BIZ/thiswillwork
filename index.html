@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DarkOS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background-color: #0a0a0a;
+      color: #00ffc3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .container {
+      border: 2px solid #00ffc3;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 90vw;
+    }
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #000;
+      border: 1px solid #00ffc3;
+      color: #00ffc3;
+      width: 100%;
+      max-width: 300px;
+    }
+    .hidden { display: none; }
+    .loading-bar {
+      height: 10px;
+      background: #222;
+      margin-top: 20px;
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .loading-fill {
+      height: 100%;
+      background-color: #00ffc3;
+      width: 0%;
+      transition: width 0.4s ease-in-out;
+    }
+    .hack-output {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-screen">
+    <h2>Access DarkOS</h2>
+    <div>
+      <label>Username</label><br>
+      <input type="text" value="Money Guy7" disabled>
+    </div>
+    <div>
+      <label>Password</label><br>
+      <input type="password" id="password">
+    </div>
+    <button onclick="login()">Sign In</button>
+    <p><a href="#" onclick="enterFullscreen()" style="color:#00ffc3">Enter Fullscreen</a></p>
+  </div>
+
+  <div class="container hidden" id="loading-screen">
+    <p id="loading-text">Establishing Secure Connection...</p>
+    <div class="loading-bar">
+      <div class="loading-fill" id="loading-fill"></div>
+    </div>
+  </div>
+
+  <div class="container hidden" id="hack-screen">
+    <h2>Welcome to DarkOS</h2>
+    <p>How would you like to hack?</p>
+    <p style="font-size: 14px">Options: Bank, Government, School, Crypto, Social</p>
+    <input type="text" id="hack-input" placeholder="Type option (e.g. Bank)">
+    <button onclick="processHack()">Execute</button>
+    <div class="hack-output" id="hack-output"></div>
+  </div>
+
+  <script>
+    function login() {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('loading-screen').classList.remove('hidden');
+      let fill = document.getElementById('loading-fill');
+      let text = document.getElementById('loading-text');
+      let steps = ["Fetching data...", "Bypassing firewall...", "Verifying Identity...", "Welcome to DarkOS"];
+      let progress = 0;
+
+      let interval = setInterval(() => {
+        progress += 25;
+        fill.style.width = progress + "%";
+        if (steps.length) {
+          text.innerText = steps.shift();
+        }
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('hack-screen').classList.remove('hidden');
+          }, 500);
+        }
+      }, 1000);
+    }
+
+    function enterFullscreen() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+    }
+
+    function processHack() {
+      const input = document.getElementById('hack-input').value.toLowerCase();
+      const output = document.getElementById('hack-output');
+      const options = {
+        "bank": "Connecting to Bank Servers...",
+        "government": "Accessing Government Mainframe...",
+        "school": "Injecting into School Records...",
+        "crypto": "Decrypting Crypto Wallets...",
+        "social": "Scraping Social Media Data..."
+      };
+      if (options[input]) {
+        output.innerText = options[input];
+      } else {
+        output.innerText = "Unknown target. Please type a valid option.";
+      }
+    }
+  </script>
+</body>
+</html>
